@@ -1,26 +1,157 @@
 @import "tailwindcss";
 
+/*
+ * Aurelia design tokens. Color values are injected at runtime from
+ * src/config/wedding.config.ts (see ThemeStyle in layout.tsx).
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --au-rose: #d0a796;
+  --au-rose-light: #f1dcd2;
+  --au-rose-muted: #d8b3a4;
+  --au-sage: #9fb09b;
+  --au-sage-dark: #7d8f7a;
+  --au-gold: #c9a96b;
+  --au-cream: #f3e3c9;
+  --au-ivory: #fbf3e6;
+  --au-ink: #5b4a42;
+
+  --au-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --au-title: var(--font-cinzel), "Cinzel", Georgia, serif;
+  --au-script: var(--font-script), "Dancing Script", cursive;
+  --au-sans: var(--font-jost), system-ui, sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-rose: var(--au-rose);
+  --color-rose-light: var(--au-rose-light);
+  --color-rose-muted: var(--au-rose-muted);
+  --color-sage: var(--au-sage);
+  --color-sage-dark: var(--au-sage-dark);
+  --color-gold: var(--au-gold);
+  --color-cream: var(--au-cream);
+  --color-ivory: var(--au-ivory);
+  --color-ink: var(--au-ink);
+  --font-serif: var(--au-serif);
+  --font-title: var(--au-title);
+  --font-script: var(--au-script);
+  --font-sans: var(--au-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--au-ivory);
+  color: var(--au-ink);
+  font-family: var(--au-serif);
+  font-size: 1.05rem;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.font-title {
+  font-family: var(--au-title);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.font-script {
+  font-family: var(--au-script);
+}
+
+/* Eyebrow label above section titles */
+.eyebrow {
+  font-family: var(--au-title);
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  font-size: 0.7rem;
+  color: var(--au-sage-dark);
+}
+
+/* Decorative flourish line with centered ornament */
+.flourish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  color: var(--au-gold);
+}
+.flourish::before,
+.flourish::after {
+  content: "";
+  height: 1px;
+  width: 70px;
+  background: linear-gradient(to right, transparent, var(--au-gold));
+}
+.flourish::after {
+  background: linear-gradient(to left, transparent, var(--au-gold));
+}
+
+/* Warm parchment / paper gradient backdrop */
+.bg-parchment {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(201, 169, 107, 0.08), transparent 42%),
+    radial-gradient(circle at 85% 10%, rgba(208, 167, 150, 0.1), transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(159, 176, 155, 0.08), transparent 45%),
+    var(--au-ivory);
+}
+
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 0;
+  background: var(--au-gold);
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* heartbeat animation for the reveal heart */
+@keyframes au-heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.08);
+  }
+  40% {
+    transform: scale(0.98);
+  }
+}
+.au-heartbeat {
+  animation: au-heartbeat 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .au-heartbeat {
+    animation: none;
+  }
 }
